@@ -1,17 +1,38 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React, {useState} from 'react';
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
-import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {
+  Platform,
+  DeviceEventEmitter,
+  NativeEventEmitter,
+  NativeModules,
+} from 'react-native';
+
+export const {Mini} = NativeModules;
 
 function App(): JSX.Element {
+  const [pre, setPre] = useState(false);
+  const handlePress = () => {
+    Mini.navigateToScreen();
+    // Call the getName method with a callback
+    Mini.getName(name => {
+      console.log('pressed', name);
+    });
+  };
   return (
     <View>
       <Text style={styles.sectionTitle}>hello</Text>
+      <Pressable>
+        <Text onPress={handlePress}>
+          Click here to open another React native
+        </Text>
+      </Pressable>
     </View>
   );
 }
